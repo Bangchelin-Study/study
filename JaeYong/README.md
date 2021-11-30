@@ -110,7 +110,7 @@ $\uparrow\downarrow$
 <br/>
 <br/>
 
-# 클래스의 작성기준
+# 3. 클래스의 작성기준
 
 > ---
 
@@ -154,7 +154,7 @@ console.log(obj.getPointProto());
 <br/>
 <br/>
 
-# Constructor
+# 4. Constructor
 
 > ---
 
@@ -219,8 +219,15 @@ const obj = new Point(100);
 > > ### constructor의 return을 작성한 경우
 > >
 > > - Number, String을 반환할 경우 이를 무시하고 인스턴스를 반환한다.
+> >
 > > - Object를 반환하면 Object를 반환한다.
-> >   <br/><br/>
+> >   <br/>
+> >   
+> >   <br/>
+
+---
+
+
 
 ```javascript
 class Point {
@@ -240,4 +247,139 @@ log(obj instanceof Point);
  */
 ```
 
+
+
+# 5. getter / setter, static메소드, 호이스팅
+
 > ---
+
+> ## getter / setter
+>
+> > - getter / setter 는 메소드를 호출하여 값을 구한다.
+> >
+> > - 메소드와 같이 ()를 작성하지만, 사용할때는 변수와 같이 사용한다.
+> >
+> > <br/><br/>
+
+---
+
+```javascript
+class Point{
+    constructor(point){
+        this.point = point;
+    }
+    //getter의 키워드는 get이다.
+    get getPoint(){
+        return this.point;
+    }
+    set setPoint(point){
+        this.point = point
+    }
+};
+
+const obj = new Point(100);
+obj.getPoint=40
+log(obj.getPoint);
+/*
+*	[결과]
+*	40
+*/
+```
+
+---
+
+>## static
+>
+>> - 구조적 특성은 prototype이 아닌 **클래스**에 직접 연결되어 있어 인스턴스에서는 호출할 수 없다.
+
+---
+
+```java
+class Point{
+    //static 키워드는 static이다.
+    static getPoint(){
+        return 100;
+    }
+};
+
+log(Point.getPoint);
+/*
+*	[결과]
+*	100
+*	
+*	const obj = new Point(100);
+*	obj.getPoint() 오류난다. or undefined
+*/
+```
+
+
+
+---
+
+> ## 호이스팅
+>
+> > - 클래스는 호이스팅되지 않는다.
+> >
+> > - const, let 변수처럼 class 키워드가 있는 시점에서 오브젝트를 생성하기 때문이다.
+> >
+> >   <br/><br/>
+
+---
+
+```javascript
+try{
+    const obj = Point;
+} catch {
+  log('호이스팅 불가')  
+};
+// 미리 값 불러오려하는 것, 호이스팅
+
+class Point{
+    static getPoint(){
+        return 100;
+    }
+};
+
+console.log(Point.getPoint());
+// 선언 후에 불러오는 것
+/*
+*	[결과]
+*	호이스팅 불가
+*	100
+*/
+```
+
+---
+
+> ## new.target
+>
+> > - new.target 프로퍼티는 함수 or 생성자가 new 연산자로 호출된 여부를 반환한다.
+> >
+> > - new 연산자로 constructor를 호출하면 new.target은 constructor를 참조한다.
+> > - 함수로 호출하면 undefined 반환
+
+---
+
+```javascript
+class Point{
+    construvtor(){
+        log(new.target.name)
+    }
+};
+new Point();
+/*
+*	[결과]
+*	Point
+*/
+
+function book(){
+    log(new.target);
+};
+book();
+
+/*
+*	[결과]
+*	undefined
+*/
+```
+
