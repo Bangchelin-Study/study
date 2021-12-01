@@ -1,4 +1,15 @@
-# 1. 객체지향 언어
+[1. 객체지향 언어](#1)<br/>
+[2. 클래스 선언](#2)<br/>
+[3. 클래스의 작성기준](#3)<br/>
+[4. Constructor](#4)<br/>
+[5. getter / setter, static메소드, 호이스팅](#5)<br/>
+[6. 상속](#6)<br/>
+[7. Super 키워드, constructor 호출](#7)<br/>
+[8. Built-in 오브젝트 상속, Object 상속, Image 오브젝트 상속, Audio 오브젝트 상속](#8)<br/>
+[9. this 참조, Generator](#9)<br/>
+[10](#10)
+
+# <a id="1"></a>[1](#a1). 객체지향 언어
 
 > ---
 
@@ -37,7 +48,7 @@ console.log(obj.point);
 <br/>
 <br/>
 
-# 2. 클래스 선언
+# <a id="2"></a>[2](#a1). 클래스 선언
 
 > ---
 
@@ -110,7 +121,7 @@ $\uparrow\downarrow$
 <br/>
 <br/>
 
-# 3. 클래스의 작성기준
+# <a id="3"></a>[3](#a1). 클래스의 작성기준
 
 > ---
 
@@ -154,14 +165,17 @@ console.log(obj.getPointProto());
 <br/>
 <br/>
 
-# 4. Constructor
+# <a id="4"></a>[4](#a1). Constructor
 
 > ---
 
 > constructor란?
 >
-> - constructor는 자바스크립트에서 생성자이다.
+>    <br/>
 
+> - constructor는 자바스크립트에서 생성자이다.
+>   <br/> <br/>
+>
 > ---
 
 ```javascript
@@ -179,6 +193,8 @@ const obj = new Point(100);
 
 > ## constructor의 실행순서
 >
+>   <br/>
+
 > 1.  new 연산자를 만나면 constructor를 호출한다.
 > 2.  **빈 오브젝트**(인스턴스)를 생성한다.
 > 3.  인스턴스에 property 이름과 값을 설정하여 인스턴스 구조를 만든다.
@@ -188,7 +204,8 @@ const obj = new Point(100);
 > 7.  **_this.point (undefined)은 인스턴스의 property가 된다._**
 > 8.  point의 값은 100이된다.
 > 9.  생성한 인스턴스를 반환한다.
-
+>     <br/> <br/>
+>
 > ---
 
 <br/>
@@ -198,6 +215,8 @@ const obj = new Point(100);
 
 > ## constructor의 초기화
 >
+> >   <br/>
+
 > > ### constructor를 작성하지 않았을 경우
 > >
 > > - 클래스 전체를 참조하도록 환경을 만든다.
@@ -212,6 +231,8 @@ const obj = new Point(100);
 
 > ## constructor의 반환
 >
+> >   <br/>
+
 > > ### constructor의 return을 작성하지 않았을 경우
 > >
 > > - 생성한 인스턴스를 반환한다.
@@ -222,12 +243,10 @@ const obj = new Point(100);
 > >
 > > - Object를 반환하면 Object를 반환한다.
 > >   <br/>
-> >   
+> >
 > >   <br/>
 
 ---
-
-
 
 > ---
 
@@ -249,52 +268,54 @@ log(obj instanceof Point);
  */
 ```
 
-
-
-# 5. getter / setter, static메소드, 호이스팅
+# <a id="5"></a>[5](#a1). getter / setter, static메소드, 호이스팅
 
 > ---
 
 > ## getter / setter
 >
+> >   <br/>
+
 > > - getter / setter 는 메소드를 호출하여 값을 구한다.
 > >
 > > - 메소드와 같이 ()를 작성하지만, 사용할때는 변수와 같이 사용한다.
-> >
-> > <br/><br/>
+> >   <br/><br/>
 
----
+> ---
 
 ```javascript
-class Point{
-    constructor(point){
-        this.point = point;
-    }
-    //getter의 키워드는 get이다.
-    get getPoint(){
-        return this.point;
-    }
-    set setPoint(point){
-        this.point = point
-    }
-};
+class Point {
+  constructor(point) {
+    this.point = point;
+  }
+  //getter의 키워드는 get이다.
+  get getPoint() {
+    return this.point;
+  }
+  set setPoint(point) {
+    this.point = point;
+  }
+}
 
 const obj = new Point(100);
-obj.getPoint=40
+obj.getPoint = 40;
 log(obj.getPoint);
 /*
-*	[결과]
-*	40
-*/
+ *	[결과]
+ *	40
+ */
 ```
 
----
+> ---
 
->## static
+> ## static
 >
->> - 구조적 특성은 prototype이 아닌 **클래스**에 직접 연결되어 있어 인스턴스에서는 호출할 수 없다.
+> >   <br/>
 
----
+> > - 구조적 특성은 prototype이 아닌 **클래스**에 직접 연결되어 있어 인스턴스에서는 호출할 수 없다.
+> >   <br/> <br/>
+
+> ---
 
 ```java
 class Point{
@@ -308,80 +329,384 @@ log(Point.getPoint);
 /*
 *	[결과]
 *	100
-*	
+*
 *	const obj = new Point(100);
 *	obj.getPoint() 오류난다. or undefined
 */
 ```
 
-
-
----
+> ---
 
 > ## 호이스팅
 >
+> >   <br/>
+
 > > - 클래스는 호이스팅되지 않는다.
 > >
 > > - const, let 변수처럼 class 키워드가 있는 시점에서 오브젝트를 생성하기 때문이다.
-> >
 > >   <br/><br/>
 
----
+> ---
 
 ```javascript
-try{
-    const obj = Point;
+try {
+  const obj = Point;
 } catch {
-  log('호이스팅 불가')  
-};
+  log("호이스팅 불가");
+}
 // 미리 값 불러오려하는 것, 호이스팅
 
-class Point{
-    static getPoint(){
-        return 100;
-    }
-};
+class Point {
+  static getPoint() {
+    return 100;
+  }
+}
 
 console.log(Point.getPoint());
 // 선언 후에 불러오는 것
 /*
-*	[결과]
-*	호이스팅 불가
-*	100
-*/
+ *	[결과]
+ *	호이스팅 불가
+ *	100
+ */
 ```
 
----
+> ---
 
 > ## new.target
 >
+> >   <br/>
+
 > > - new.target 프로퍼티는 함수 or 생성자가 new 연산자로 호출된 여부를 반환한다.
 > >
 > > - new 연산자로 constructor를 호출하면 new.target은 constructor를 참조한다.
 > > - 함수로 호출하면 undefined 반환
+> >   <br/> <br/>
 
----
+> ---
 
 ```javascript
-class Point{
-    construvtor(){
-        log(new.target.name)
-    }
-};
+class Point {
+  construvtor() {
+    log(new.target.name);
+  }
+}
 new Point();
 /*
-*	[결과]
-*	Point
-*/
+ *	[결과]
+ *	Point
+ */
 
-function book(){
-    log(new.target);
-};
+function book() {
+  log(new.target);
+}
 book();
 
 /*
-*	[결과]
-*	undefined
-*/
+ *	[결과]
+ *	undefined
+ */
 ```
 
+<br/>
+<br/>
+
+# <a id="6"></a>[6](#a1). 상속
+
+> ---
+
+> ## 상속의 특징
+>
+> >   <br/>
+
+> > - 상속은 OOP기능 중 하나이다.
+> > - 클래스에 다른 클래스를 포함시키는 형태이다.
+> > - 포함시킨 클래스의 property를 사용할 수 있다.
+> > - 키워드는 extends 이다.
+> >   <br/> <br/>
+
+> ---
+
+```javascript
+class Book {
+  constructor(title) {
+    this.title = title;
+  }
+  getTitle() {
+    return this.title;
+  }
+}
+
+//extends 키워드로 book을 상속 받았다.
+class Point extends Book {
+  setPoint(point) {
+    this.point = point;
+  }
+}
+
+//이 순간 Point의 prototype에는 setPoint가 존재하며 그안의 __proto__에 getTitle()이 존재한다.
+
+const obj = new Point("책");
+
+// obj는 Book에서 실행된 constructor에 의해 title="책"이 존재하며, __proto__ 에는 Book 인스턴스가 존재한다.
+
+console.log(obj.getTitle());
+
+// 처음에 point에서 setTitle()함수를 찾고, 없다면 book으로 가서 찾는다.
+
+/*
+ * [결과]
+ *  책
+ */
+```
+
+<br/>
+<br/>
+
+# <a id="7"></a>[7](#a1). Super 키워드, constructor 호출
+
+> ---
+
+> ## super
+>
+> >   <br/>
+
+> > - 슈퍼 클래스와 서브 클래스에 같은 이름의 메소드가 있으면 서브 클래스의 메소드가 호출된다.
+> > - super키워드를 이용해 슈퍼 클래스의 메소드를 호출할 수 있다.
+> > - ex) super.getTitle
+> >   <br/> <br/>
+
+> ---
+
+```javascript
+class Book {
+  getTitle() {
+    console.log("슈퍼");
+  }
+}
+
+//extends 키워드로 book을 상속 받았다.
+class Point extends Book {
+  getTitle() {
+    super.getTitle();
+    console.log("서브");
+  }
+}
+
+new Point().getTitle();
+
+/*
+ * [결과]
+ *  슈퍼
+ *  서브
+ */
+```
+
+> ---
+
+> ## constructor 호출
+>
+> >   <br/>
+
+> > - 서브와 슈퍼에 constructor를 모두 작성하지 않으면 defalt constructor가 호출된다.
+> > - 슈퍼에만 작성시 파라미터 값을 슈퍼로 넘겨준다.
+> > - 서브에서만 작성시 에러가난다.
+> > - 둘다 작성시 서브에서 super()로 호출해야 한다.
+> >   <br/> <br/>
+
+> ---
+
+```javascript
+
+//          슈퍼, 서브 둘다 작성 x
+
+class Book {
+  setTitle(title) {
+    this.title = title;
+  }
+}
+
+//extends 키워드로 book을 상속 받았다.
+class Point extends Book {}
+
+const obj = new Point();
+obj.setTitle("책");
+console.log(obj.title);
+/*
+ * [결과]
+ *  책
+ */
+
+
+<------------------------------------------>
+
+
+//              슈퍼에만 작성
+
+class Book {
+  constructor(title){
+    this.title = title;
+  }
+}
+
+//extends 키워드로 book을 상속 받았다.
+class Point extends Book {}
+
+const obj = new Point("책");
+console.log(obj.title);
+/*
+ * [결과]
+ *  책
+ */
+
+<----------------------------------------->
+
+
+//                둘다 작성
+
+class Book {
+  constructor(title){
+    this.title = title;
+  }
+}
+
+//extends 키워드로 book을 상속 받았다.
+class Point extends Book {
+  constructor(title,point){
+    super(title);
+    this.point = point;
+  }
+
+}
+
+const obj = new Point("책",100);
+console.log(`${obj.title}, ${obj.point}`);
+/*
+ * [결과]
+ *  책, 100
+ */
+```
+
+<br/>
+<br/>
+
+# <a id="8"></a>[8](#a1). Built-in 오브젝트 상속, Object 상속, Image 오브젝트 상속, Audio 오브젝트 상속
+
+> ---
+
+> ## Built-in 상속, Audio, Image
+>
+> >   <br/>
+
+> > - 빌트인 오브젝트 상속이 가능하며 인스턴스가 빌트인 오브젝트의 특성일 갖게 된다.
+> > - this로 빌트인 오브젝트에 접근할 수 있다.
+> > - extends 키워드로 구현한다.
+> > - const value of this (array에서) 와 같은 키워드를 상속받아 for문을 반복할 수 있다.
+> > - Audio, Image도 거의 비슷한 개념으로 상속 가능한다.
+> >   <br/> <br/>
+
+> ---
+
+> ## Object 상속
+>
+> >   <br/>
+
+> > - 클래스가 아닌 오브젝트는 실제 상속은 안되지만, Object.setPrototypeOf( const a, const b )로 상속과 같은 구조로 만들 수 있다.
+> >   <br/> <br/>
+
+> ---
+
+<br/>
+<br/>
+
+# <a id="9"></a>[9](#a1). this 참조, Generator
+
+> ---
+
+> ## this 참조
+>
+> >   <br/>
+
+> > - 인스턴스.메소드() 형태로 호출하면 메소드에서 this가 인스턴스를 참조한다.
+> > - static 메소드에서 this는 메소드가 속한 **클래스**를 참조한다.
+> > - <br/> <br/>
+
+> ---
+
+```javascript
+class Point{
+  static setPoint(point){
+    this.value = point;
+  }
+}
+Point.setPoint(100);
+    //클래스 오브젝트 안에 설정이 된다.
+console.log(Point.value)
+    //클래스 오브젝트 안에 value값을 설정한다.
+console.log(new Point().value);
+    //인스턴스를 생성했기 때문에 static이 존재하지않아 없는 값을 참조한다.
+
+/*
+ * [결과]
+ *  100
+ *  undefined
+ */
+
+ <------------------------------>
+ class Point{
+   constructor(){
+     log(this.constructor.get());
+   }
+  static get(point){
+    return 100;
+  }
+}
+new Point();
+
+// 이렇게 사용하면 static도 인스턴스에서 사용이 가능하다.
+
+/*
+ * [결과]
+ *  100
+ */
+```
+
+> ---
+
+> ## Generator
+>
+> >   <br/>
+
+> > - 클래스의 제너레이터 함수는 prototype에 연결된다.
+> > - 인스턴스로 호출해야 한다.
+> > - <br/> <br/>
+
+> ---
+
+```javascript
+class Point {
+  *getPoint() {
+    yield 10;
+    yield 20;
+  }
+}
+const gen = new Point();
+
+//제너레이터 함수를 호출한다.
+const obj = gen.getPoint();
+log(obj.next());
+log(obj.next());
+log(obj.next());
+
+/*
+ * [결과]
+ *  {value: 10, done: false}
+ *  {value: 20, done: false}
+ *  {value: undefined, done: true}
+ */
+```
+
+<br/>
+<br/>
+
+# <a id="10"></a>[10](#a1). proxy
