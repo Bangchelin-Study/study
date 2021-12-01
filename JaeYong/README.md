@@ -1,11 +1,12 @@
-| 목차                        |
-| --------------------------- |
-| [1. 객체지향 언어](#1)<br/> |
-|[2. 클래스 선언](#2)<br/>|
-|[3. 클래스의 작성기준](#3)<br/>|
-|[4. Constructor](#4)<br/>|
-|[5. getter / setter, static메소드, 호이스팅](#5)<br/>|
-|[6. 상속](#6)<br/>|
+| 목차                                                  |
+| ----------------------------------------------------- |
+| [1. 객체지향 언어](#1)<br/>                           |
+| [2. 클래스 선언](#2)<br/>                             |
+| [3. 클래스의 작성기준](#3)<br/>                       |
+| [4. Constructor](#4)<br/>                             |
+| [5. getter / setter, static메소드, 호이스팅](#5)<br/> |
+| [6. 상속](#6)<br/>                                    |
+
 |[7. Super 키워드, constructor 호출](#7)<br/>
 |[8. Built-in 오브젝트 상속, Object 상속, Image 오브젝트 상속, Audio 오브젝트 상속](#8)<br/>|
 |[9. this 참조, Generator](#9)<br/>|
@@ -79,9 +80,7 @@ const Point = class {
 
 ---
 
-<a id="prototype"></a>[1](#a1)
-
-## prototype이란?
+## prototype이란?<a id="prototype"></a>[](#a1)
 
 - 자바스크립트의 object는 모든 객체의 property와 method를 prototype에서 상속받고 있다.
 - 이런 구조를 갖고 객체의 형태를 띈다.
