@@ -599,7 +599,7 @@ console.log(`${obj.title}, ${obj.point}`);
 > ## Built-in 상속, Audio, Image
 >
 > >   <br/>
-
+> >
 > > - 빌트인 오브젝트 상속이 가능하며 인스턴스가 빌트인 오브젝트의 특성일 갖게 된다.
 > > - this로 빌트인 오브젝트에 접근할 수 있다.
 > > - extends 키워드로 구현한다.
@@ -612,7 +612,7 @@ console.log(`${obj.title}, ${obj.point}`);
 > ## Object 상속
 >
 > >   <br/>
-
+> >
 > > - 클래스가 아닌 오브젝트는 실제 상속은 안되지만, Object.setPrototypeOf( const a, const b )로 상속과 같은 구조로 만들 수 있다.
 > >   <br/> <br/>
 
@@ -628,7 +628,7 @@ console.log(`${obj.title}, ${obj.point}`);
 > ## this 참조
 >
 > >   <br/>
-
+> >
 > > - 인스턴스.메소드() 형태로 호출하면 메소드에서 this가 인스턴스를 참조한다.
 > > - static 메소드에서 this는 메소드가 속한 **클래스**를 참조한다.
 > > - <br/> <br/>
@@ -678,7 +678,7 @@ new Point();
 > ## Generator
 >
 > >   <br/>
-
+> >
 > > - 클래스의 제너레이터 함수는 prototype에 연결된다.
 > > - 인스턴스로 호출해야 한다.
 > > - <br/> <br/>
