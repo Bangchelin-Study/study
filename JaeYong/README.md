@@ -222,6 +222,8 @@ const obj = new Point(100);
 > > - Object를 반환하면 Object를 반환한다.
 > >   <br/><br/>
 
+> ---
+
 ```javascript
 class Point {
   //constructor(생성자) Object를 반환한다.
