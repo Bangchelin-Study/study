@@ -900,6 +900,8 @@ console.log(left);
 | 파라미터 | target, 대상 오브젝트<br/>handler 오브젝트 |
 |   반환   |           생성한 Proxy 인스턴스            |
 
+> ---
+
 > <br/>
 >
 > - Proxy 인스턴스를 생성하여 반환한다.
@@ -916,6 +918,8 @@ console.log(left);
 >   >   <br/><br/>
 >
 > <br/>
+
+> ---
 
 ```javascript
 const target = ["A", "B"];
