@@ -187,7 +187,7 @@ console.log(obj.getPointProto());
 > constructor란?
 >
 >    <br/>
-
+>
 > - constructor는 자바스크립트에서 생성자이다.
 >   <br/> <br/>
 >
@@ -209,7 +209,7 @@ const obj = new Point(100);
 > ## constructor의 실행순서
 >
 >   <br/>
-
+>
 > 1.  new 연산자를 만나면 constructor를 호출한다.
 > 2.  **빈 오브젝트**(인스턴스)를 생성한다.
 > 3.  인스턴스에 property 이름과 값을 설정하여 인스턴스 구조를 만든다.
@@ -231,7 +231,7 @@ const obj = new Point(100);
 > ## constructor의 초기화
 >
 > >   <br/>
-
+> >
 > > ### constructor를 작성하지 않았을 경우
 > >
 > > - 클래스 전체를 참조하도록 환경을 만든다.
@@ -247,7 +247,7 @@ const obj = new Point(100);
 > ## constructor의 반환
 >
 > >   <br/>
-
+> >
 > > ### constructor의 return을 작성하지 않았을 경우
 > >
 > > - 생성한 인스턴스를 반환한다.
@@ -290,7 +290,7 @@ log(obj instanceof Point);
 > ## getter / setter
 >
 > >   <br/>
-
+> >
 > > - getter / setter 는 메소드를 호출하여 값을 구한다.
 > >
 > > - 메소드와 같이 ()를 작성하지만, 사용할때는 변수와 같이 사용한다.
@@ -326,7 +326,7 @@ log(obj.getPoint);
 > ## static
 >
 > >   <br/>
-
+> >
 > > - 구조적 특성은 prototype이 아닌 **클래스**에 직접 연결되어 있어 인스턴스에서는 호출할 수 없다.
 > >   <br/> <br/>
 
@@ -355,7 +355,7 @@ log(Point.getPoint);
 > ## 호이스팅
 >
 > >   <br/>
-
+> >
 > > - 클래스는 호이스팅되지 않는다.
 > >
 > > - const, let 변수처럼 class 키워드가 있는 시점에서 오브젝트를 생성하기 때문이다.
@@ -391,7 +391,7 @@ console.log(Point.getPoint());
 > ## new.target
 >
 > >   <br/>
-
+> >
 > > - new.target 프로퍼티는 함수 or 생성자가 new 연산자로 호출된 여부를 반환한다.
 > >
 > > - new 연산자로 constructor를 호출하면 new.target은 constructor를 참조한다.
@@ -433,7 +433,7 @@ book();
 > ## 상속의 특징
 >
 > >   <br/>
-
+> >
 > > - 상속은 OOP기능 중 하나이다.
 > > - 클래스에 다른 클래스를 포함시키는 형태이다.
 > > - 포함시킨 클래스의 property를 사용할 수 있다.
@@ -485,7 +485,7 @@ console.log(obj.getTitle());
 > ## Super
 >
 > >   <br/>
-
+> >
 > > - 슈퍼 클래스와 서브 클래스에 같은 이름의 메소드가 있으면 서브 클래스의 메소드가 호출된다.
 > > - super키워드를 이용해 슈퍼 클래스의 메소드를 호출할 수 있다.
 > > - ex) super.getTitle
@@ -522,7 +522,7 @@ new Point().getTitle();
 > ## Constructor 호출
 >
 > >   <br/>
-
+> >
 > > - 서브와 슈퍼에 constructor를 모두 작성하지 않으면 defalt constructor가 호출된다.
 > > - 슈퍼에만 작성시 파라미터 값을 슈퍼로 넘겨준다.
 > > - 서브에서만 작성시 에러가난다.
