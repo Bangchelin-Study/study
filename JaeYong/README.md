@@ -1,4 +1,4 @@
-| 목차                                                                                        |
+| <a id="a1"></a>목차                                                                         |
 | ------------------------------------------------------------------------------------------- |
 | [1. 객체지향 언어](#1)<br/>                                                                 |
 | [2. 클래스 선언](#2)<br/>                                                                   |
@@ -12,6 +12,7 @@
 | [10. Proxy](#10)                                                                            |
 | [11. Proxy 논리](#11)                                                                       |
 | [12. handler, trap](#12)                                                                    |
+| [13. Proxy 인스턴스 생성](#13)                                                              |
 
 <br/>
 
@@ -890,4 +891,50 @@ const left = middle.food;
 3. 밥 + , 수저 를 받아 left는 밥, 수저가 된다.
 */
 console.log(left);
+```
+
+# <a id="13"></a>[13](#a1). Proxy 인스턴스 생성
+
+|   구분   |                    개요                    |
+| :------: | :----------------------------------------: |
+| 파라미터 | target, 대상 오브젝트<br/>handler 오브젝트 |
+|   반환   |           생성한 Proxy 인스턴스            |
+
+> <br/>
+>
+> - Proxy 인스턴스를 생성하여 반환한다.
+> - 첫 번째 파라미터
+>   > <br/>
+>   >
+>   > - proxy 대상 target 오브젝트를 작성
+>   > - Object, Array, Function 등
+>   >   <br/><br/>
+> - 두 번째 파라미터
+>   > <br/>
+>   >
+>   > - 핸들러 작성
+>   >   <br/><br/>
+>
+> <br/>
+
+```javascript
+const target = ["A", "B"];
+const handler = {
+  get(target, key) {
+    return target[key] + ", 천 번째";
+  },
+};
+const obj = new Proxy(target, handler);
+/*
+Proxy에서 target과 handler를 연결해 준다.
+
+주의사항)
+  new연산자가 없으면 typeError가 발생한다.
+  handler를 사용하지 않더라도 작성하지 않으면 에러발생
+*/
+console.log(obj[0]);
+/*
+[결과]
+A, 천 번째
+*/
 ```
