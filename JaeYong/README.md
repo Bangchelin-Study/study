@@ -9,7 +9,9 @@
 | [7. Super 키워드, constructor 호출](#7)<br/>                                                |
 | [8. Built-in 오브젝트 상속, Object 상속, Image 오브젝트 상속, Audio 오브젝트 상속](#8)<br/> |
 | [9. this 참조, Generator](#9)<br/>                                                          |
-| [10](#10)                                                                                   |
+| [10. Proxy](#10)                                                                            |
+| [11. Proxy 논리](#11)                                                                       |
+| [12. handler, trap](#12)                                                                    |
 
 <br/>
 
@@ -19,11 +21,14 @@
 
 > ### 자바스크립트의 객체지향적 특성
 >
+> <br/>
+>
 > - 자바 스크립트는 기본적으로 <U>**객체지향 언어**</U>이다.
 > - 기본적으로 object를 이용하여 프로그램을 작성할 수 있다.
 > - 자바스크립트의 object는 property의 **집합**이다.
 > - **형체, 실체**가 있다. $\rightarrow$ property의 집합니이때문이다. class로 사용한다.
 > - **prototype**<sup >[1](#prototype)</sup> <U>**인스턴스**</U>를 생성한다.
+>   <br/><br/>
 
 > ---
 
@@ -57,10 +62,12 @@ console.log(obj.point);
 > ---
 
 > 클래스의 특징
+> <br/>
 >
 > - 클래스 키워드를 만나면 object를 생성한다.
 > - new 연산자를 생성하면 인스턴스를 생성한다.
 > - 인스턴스를 생성하지 않고 method 나 property 를 불러오면 오류가난다
+>   <br/><br/>
 
 > ---
 
@@ -127,10 +134,13 @@ $\uparrow\downarrow$
 
 > ---
 
+> <br/>
+>
 > - 세미콜론은 선택이다.
 > - function 키워드를 사용하지 않는다.
 > - 메소드와 메소드 사이에는 콤마 작성을 하지않는다.
 > - 클래스의 type은 function이다.
+>   <br/><br/>
 
 > ---
 
@@ -138,7 +148,10 @@ $\uparrow\downarrow$
 
 > ---
 
+> <br/>
+>
 > - 메소드 이름을 조합하여 사용 가능하다.
+>   <br/><br/>
 
 > ---
 
@@ -469,7 +482,7 @@ console.log(obj.getTitle());
 
 > ---
 
-> ## super
+> ## Super
 >
 > >   <br/>
 
@@ -506,7 +519,7 @@ new Point().getTitle();
 
 > ---
 
-> ## constructor 호출
+> ## Constructor 호출
 >
 > >   <br/>
 
@@ -712,3 +725,169 @@ log(obj.next());
 <br/>
 
 # <a id="10"></a>[10](#a1). proxy
+
+> ---
+
+> ## Proxy의 의미
+>
+> >   <br/>
+> >
+> > - 기본 오퍼레이션을 중간에서 가로채어 오퍼레이션을 대신하여 실행한다.
+> > - 전체 괘도를 벗어날 수 없으므로 완전히 못바꿈
+> >   <br/> <br/>
+
+> ---
+
+커피를 주문하는 오퍼레이션을 자바스크립트로 표현하면
+
+```javascript
+const counter = { order: "커피" };
+
+//counter.order을 실행하여 함수를 실행하지 않고 property를 구했으며 이것은 getter이다.
+const 주문자 = counter.order;
+
+log(주문자);
+// 즉 getter가 실행되며 값이 반환된다. 이것이 기본 오퍼레이션이다.
+
+/*
+ * [결과]
+ * 커피
+ */
+```
+
+<br/>
+<br/>
+
+> ---
+
+> ## 기본 오퍼레이션 논리
+>
+> >   <br/>
+> >
+> > - counter.order실행시 "커피"를 구해야한다. 즉, 값을 구하는 메소드가 필요하다.
+> > - 이때 엔진은 getter기능을 가진 내부 메소드 get을 호출한다. -->
+> >   counter.order을 실행하면 proto에 있는 get을 호출한다.
+> > - get을 호출하면 order를 넘겨주며, order를 property키로 하여 값을 구해 반환해준다.
+> > - 13개의 기본 메소드가 있다.
+> >   <br/> <br/>
+
+> ---
+
+<br/>
+<br/>
+
+# <a id="11"></a>[11](#a1). Proxy 논리
+
+> ---
+
+> ## Proxy 모습
+>
+> >   <br/>
+> >
+> > - 순서대로 1,2,3번의 사람이 있다고 가정하자
+> > - 세사람은 식사를 해야한다.
+> > - 왼쪽에서부터 중간, 중간에서부터 오른쪽 순으로 전달을 하면 왼쪽, 중간, 오른쪽 순으로 밥을 받는다.
+> > - 이때, 중간사람이 proxy라고 할 수 있다. 대리자 역할인 것이다.
+> > - 왼쪽사람이 오른쪽사람에게 직접 전달하면 proxy가 필요하지않다.
+> >   <br/> <br/>
+
+> ---
+
+```javascript
+//왼쪽 사람이 밥을 갖고있다.
+const target = { food: "밥" };
+//중간 사람이 target의 값을 받고
+const middle = new Proxy(target, {});
+//= 연산자가 전달해 준다.
+const left = middle.food;
+
+/*
+1. middle.food가 실행이되면 target의 getter를 호출하면서 food를 파라미터로 전달.
+2. new Proxy() 파라미터에 target을 작성하므로 middle에서 target을 알 수 있다.
+*/
+
+console.log(left);
+
+/*
+ * [결과]
+ *   밥
+ */
+```
+
+# <a id="12"></a>[12](#a1). handler, trap
+
+> ---
+
+> ## Proxy의 [사용이유](#proxy)
+>
+> > <br/>
+> >
+> > - 가운데 사람이 밥을 받아 오른쪽에 전달해 준다. 근데 문제는 오른쪽 사람은 밥이 아닌 수저까지 필요하기때문에 중간사람이 수저까지 전달해 줘야한다.
+> >   <br/><br/>
+>
+> ---
+>
+> ## target
+>
+> >   <br/>
+> >
+> > - target은 Proxy 대상 오브젝트이다.
+> > - Array, Object 등을 사용할 수 있다.
+> > - const obj = new Proxy(target, {})형태
+> > - 첫 번째 파라미터에 target을 작성한다.
+> > - Proxy 인스턴스와 target이 연결된다.
+> > - <br/> <br/>
+>
+> ---
+>
+> ## trap
+>
+> > <br/>
+> >
+> > - OS에서 사용하는 용어
+> > - 실행 중인 프로그램에 이상이 생겼을 때 실행을 중단하고 사전에 정의된 제어로 전환
+> >   <br/><br/>
+>
+> ---
+>
+> ## handler
+>
+> > <br/>
+> >
+> > - 오브젝트에 get(), set()이 있다.
+> > - handler를 핸들러 오브젝트라고 하며 핸들러라고 부른다.
+> >   <br/><br/>
+>
+> <br/>
+
+> ---
+
+<a id="proxy"></a>
+
+```javascript
+//Proxy의 사용이유
+
+//target은 밥 이라는 값만 갖고있다.
+const target = { food: "밥" };
+/*left는 수저와 밥을 동시에 받아야한다.
+  그래서 중간에서는 수저를 같이 전달해 줘야한다.
+*/
+const handler = {
+  get(target, key) {
+    return target[key] + ", 수저";
+  },
+  set(target, key) {},
+  //get과 set은 각각 getter, setter이고 동시에 trap이라고 한다.
+};
+// target에게 밥이라는 값을 받고 수저를 더해서 전달해 줘야한다.
+
+const middle = new Proxy(target, handler);
+
+const left = middle.food;
+/*
+1. 여기서 middle.food를 하면 [[Get]]대신에 Proxy에 등록된 get()트랩을 실행한다.
+2. middle.food에서 key를 food로 받고 target[food]->밥 을 전달 받는다.
+3. 밥 + , 수저 를 받아 left는 밥, 수저가 된다.
+*/
+console.log(left);
+```
