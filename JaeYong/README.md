@@ -935,6 +935,7 @@ Proxy에서 target과 handler를 연결해 준다.
 주의사항)
   new연산자가 없으면 typeError가 발생한다.
   handler를 사용하지 않더라도 작성하지 않으면 에러발생
+  
 */
 console.log(obj[0]);
 /*
@@ -942,3 +943,198 @@ console.log(obj[0]);
 A, 천 번째
 */
 ```
+
+> ---
+
+> ## trap의 원리
+>
+> - 위 코드에서 obj는 Handler를 갖고 있으며 이 안에 get과 proto가 형성이 된다.
+> - proto 안에는 trap인 get, set함수가 있는데, 엔진은 바깥에서부터 함수를 찾아가게된다.
+> - 따라서 obj[0]에서 get 트랩이 실행 될때는 이미 바깥에 생성해둔 get에 의해서 trap이 발생한다. 
+
+> ---
+
+> ---
+
+> ## Proxy.revocable()
+>
+> | 구분     | 개요                                               |
+> | -------- | -------------------------------------------------- |
+> | 파라미터 | target, 대상 오브젝트<br/>handler, 핸들러 오브젝트 |
+> | 반환     | 생성한 오브젝트                                    |
+>
+> - Proxy를 사용할 수 없는 상태로 바꿀 수 있는 오브젝트를 생성, 반환
+
+> ---
+
+```javascript
+const target = {point : 100};
+const handler = {
+    get(target, key){
+        return target[key];
+    }
+};
+const obj = Proxy.revocable(target, handler);
+// Proxy를 사용하지 못하게 만드는 기능이 추가된 Proxy를 반환했다고 생각하면 편하다.
+// 단 obj.proxy 의 형태로 호출한다. 여기에 인스턴스가 할당되는 것이다.
+console.log(obj.proxy.point);
+
+obj.revoke();
+//obj의 Proxy사용을 막아주는 코드이다.
+
+try{
+    obj.proxy.point;
+}catch{
+    console.log("Proxy 기능 사용 불가");
+}
+
+/*
+*	[결과]
+*	100
+*	Proxy기능 사용 불가
+*/
+```
+
+<br/><br/>
+
+# <a id="13"></a>[14](#a1) Proxy trap ( set 편 )
+
+> ---
+
+> ## set() 트랩
+>
+> | 구분     | 개요                                                         |
+> | -------- | ------------------------------------------------------------ |
+> | 파라미터 | target, 대상 오브젝트<br/>key, property key<br/>value, property value<br/>receiver, 설명 참조 |
+> | 반환     | boolean (성공여부)                                           |
+>
+> - 프로퍼티를 설정하는 트랩으로 target 또는 receiver에 property( key, value )를 설정한다.
+> - set 트랩이 호출되면 엔진이 실행 환경을 분석하여 파라미터 값을 설정한다.
+
+> ---
+
+```javascript
+// set트랩이 설정되지 않은 경우
+const target={};
+const obj = new Proxy(target, {});
+//set trap호출
+obj.point = 100;
+//get trap호출
+console.log(obj.point);
+/*
+이러한 경우에는 엔진이 원래 가지고 있는 set,get trap을 이용하기 때문에 Proxy가 없어도 상관이 없다.
+*/
+
+<------------------------------------->
+const target={};
+
+
+const handler={
+    set(target,key,value,receiver){
+        target[key] = value + 200;
+    }
+};
+const obj = new Proxy(target, handler);
+/*
+1. 처음 파라미터는 target을 설정한다.
+2. key에 point를 설정한다.
+3. value에 100을 설정한다.
+4. receiver파라미터에 Proxy 또는 Proxy를 상속받은 오브젝트를 설정한다.
+5. 파라미터는 이름으로 매핑하지않고 순서로 매핑한다.
+*/
+obj.point = 100;
+
+//get trap호출
+console.log(obj.point);
+/*
+*	[결과]
+*	300
+*/
+```
+
+> ---
+
+> ## set 트랩 호출
+>
+> - proxy[key]=100을 실행하면 set 트랩이 호출된다.
+>
+> - Object.create(proxy, {프로퍼티}) 이때 set트랩이 호출된다.
+>
+>   > - 인스턴스에 있는 property 설정, 인스턴스에 없는 property 설정이 나뉜다
+
+> ---
+
+```javascript
+//인스턴스에 없는 property를 설정할 때
+const target = {};
+const handler = {
+    point : 700,
+    set(target, key, value, receiver){
+        //아래 코드를 주석처리하면 undefined가 나온다.
+        target[key] = value + 200;
+    }
+};
+const proxy = new Proxy(target,handler);
+/*
+create함수를 호출하여 proxy를 상속받은 인스턴스를 생성한다.
+
+[주의사항]
+새롭게 만든 인스턴스이므로 obj에는 point가 없다!
+*/
+const obj = Object.create(proxy, {
+    bonus:{value: 500, writable:ture}
+});
+
+/*
+1. 처음으로 obj.point를 할당하게 된다.
+2. point가 없으므로 set 트랩이 호출된다.
+3. set 트랩 : target[key] = value + 200;
+4. target에 {point: 300}을 설정합니다.
+*/
+obj.point = 100;
+
+/*
+1. obj.point는 obj 인스턴스 property로 point를 검색한다.
+2. obj에는 point가 없다. target에 있다.
+3. target에서 point를 검색한다.
+4. 300을 반환한다.
+5. handler 에서 point를 검색하지 않는다. {point:700}이 있지만 반환하지 않는다.
+*/
+console.log(obj.point);
+//실제 콘솔에 찍어서 확인하는 것을 추천. 이해가 어려움
+
+
+<----------------------------------------->
+
+const target = {};
+const handler = {
+    point : 700,
+    set(target, key, value, receiver){
+        target[key] = value + 200;
+    }
+};
+const proxy = new Proxy(target,handler);
+const obj = Object.create(proxy, {
+    point:{value: 100, writable:ture};
+});
+
+/*
+1. obj에 point가 있다!
+2. set trap을 실행하지 않는다.
+3. point 100이 obj 인스턴스 property로 설정되고, obj.__proto__에 handler와 target이 설정되므로 point를 먼저 인식하기 때문이다.
+4. {point: 100}의 value를 700으로 변경한다.
+*/
+obj.point = 700;
+//obj에는 point가 있다.
+console.log(obj.point);
+//target에는 point가 없다.
+console.log(target.point);
+
+/*
+*	[결과]
+*	700
+*	undefined
+*/
+
+```
+
