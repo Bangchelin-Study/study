@@ -998,7 +998,7 @@ try{
 
 <br/><br/>
 
-# <a id="13"></a>[14](#a1) Proxy trap ( set 편 )
+# <a id="14"></a>[14](#a1). Proxy trap ( set 편 )
 
 > ---
 
