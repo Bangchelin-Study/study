@@ -1170,5 +1170,28 @@ obj에  point가 없으므로 set타갯을 호출하게 된다.
 console.log로 대체되었다.
 */
 obj.point = 500;
+
+<--------------------------------------->
+const target = { };
+const handler = {
+    set(target, key, value, receiver){
+        target[key] = value + 200;
+        target.title = receiver.title + ",JS";
+        return true;
+    }
+};
+const proxy = new Proxy(target, handler);
+const obj = Object.create(proxy,{
+    title: {value: "책"}
+});
+obj.point = 100;
+console.log(obj.title);
+console.log(target.title);
+/*
+*	[결과]
+*	책
+*	책, JS
+* 	이건 왜 이런지 생각해보자.
+*/
 ```
 
