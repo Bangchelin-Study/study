@@ -1074,9 +1074,9 @@ obj.point = 100;
 
 /*
 1. obj.point는 obj 인스턴스 property로 point를 검색한다.
-2. obj에는 point가 없다. target에 있다.
-3. target에서 point를 검색한다.
-4. 300을 반환한다.
+2. obj에는 point가 없다.
+3. point가 없으므로 set 트랩을 실행하게 된다. 원래라면 point에 100을 넣지만, 현재 handler에 set트랩에 value+200 이 있기 때문에 { value : 300 } 이라는 값이 obj에 설정이 된다.
+4. obj.point를 하면 300을 반환한다.
 5. handler 에서 point를 검색하지 않는다. {point:700}이 있지만 반환하지 않는다.
 */
 console.log(obj.point);
@@ -1094,6 +1094,25 @@ const handler = {
 };
 const proxy = new Proxy(target,handler);
 const obj = Object.create(proxy, {
+    /*
+    	writable을 작성하지않으면 false가 기본
+    	true일때만 값이 변경된다.
+    	
+    	
+    	***[주의사항]***
+    	false일 경우 값을 변경하더라도 오류가 나지는않는다.
+    	
+    	ex)
+                console.log(obj.point = 200)
+                console.log(obj.point)
+                
+                [결과값]
+                
+                200
+                100
+                
+                이다.
+    */
     point:{value: 100, writable:ture};
 });
 
@@ -1115,5 +1134,41 @@ console.log(target.point);
 *	undefined
 */
 
+// 결론 point가 있으면 set을 호출하지 않고, 없으면 호출한다.
+
+```
+
+> ---
+
+> ## set 트랩의 4번째 파라미터
+>
+> - Proxy 인스턴스가 설정된다.
+>
+> - const obj = Object.create( proxy, {프로퍼티} )
+>
+>   > <br/>
+>   >
+>   > - 4번째 파라미터에는 Object.create()로 생성한 인스턴스가 설정된다.
+>   >
+>   > <br/>
+
+> ---
+
+```javascript
+const target = { point : 100 };
+const handler = {
+    set(target, key, value, receiver){
+        console.log(Object.is(target, receiver));
+        //receiver 는 obj.point=500을 할 때, obj 즉 Proxy인스턴스가 설정된다.
+        console.log(receiver.point);
+    }
+};
+const obj = new Proxy(target, handler);
+/*
+obj에  point가 없으므로 set타갯을 호출하게 된다.
+= 오퍼레이션은 
+console.log로 대체되었다.
+*/
+obj.point = 500;
 ```
 
