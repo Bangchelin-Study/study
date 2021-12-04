@@ -248,7 +248,6 @@ const obj = new Point(100);
 
 > ## constructor의 반환
 >
-> >   <br/>
 > >
 > > ### constructor의 return을 작성하지 않았을 경우
 > >
@@ -291,7 +290,6 @@ log(obj instanceof Point);
 
 > ## getter / setter
 >
-> >   <br/>
 > >
 > > - getter / setter 는 메소드를 호출하여 값을 구한다.
 > >
@@ -327,7 +325,6 @@ log(obj.getPoint);
 
 > ## static
 >
-> >   <br/>
 > >
 > > - 구조적 특성은 prototype이 아닌 **클래스**에 직접 연결되어 있어 인스턴스에서는 호출할 수 없다.
 > >   <br/> <br/>
