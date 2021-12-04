@@ -148,10 +148,8 @@ $\uparrow\downarrow$
 
 > ---
 
-### computed name
-
-> ---
-
+> ### computed name
+>
 > <br/>
 >
 > - 메소드 이름을 조합하여 사용 가능하다.
