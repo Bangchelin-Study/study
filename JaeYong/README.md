@@ -180,7 +180,7 @@ console.log(obj.getPointProto());
 
 > ---
 
-> constructor란?
+> ## constructor란?
 >
 >    <br/>
 >
