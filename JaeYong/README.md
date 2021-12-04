@@ -233,7 +233,6 @@ const obj = new Point(100);
 
 > ## constructor의 초기화
 >
-> >   <br/>
 > >
 > > ### constructor를 작성하지 않았을 경우
 > >
