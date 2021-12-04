@@ -1140,7 +1140,7 @@ console.log(target.point);
 
 > ---
 
-> ## set 트랩의 4번째 파라미터
+> ## set 트랩 - receiver
 >
 > - Proxy 인스턴스가 설정된다.
 >
@@ -1192,6 +1192,41 @@ console.log(target.title);
 *	책
 *	책, JS
 * 	이건 왜 이런지 생각해보자.
+*/
+```
+
+> ---
+
+>  ## set() - this
+>
+> - set트랩에서 this는 handler 오브젝트를 참조한다.
+
+> ---
+
+```javascript
+const target = {point : 100};
+const handler = {
+    point: 123,
+    set(target, key, value, receiver){
+        console.log(this.point);
+        this.book = "책";
+    }
+};
+const obj = new Proxy(target, handler);
+/* 	obj에는 point가 존재하지않는다. --> set트랩 호출
+	set안에 log(this.point)에서 this는 handler이므로 123을 호출 --> 123출력
+	handler에 book이라는 property에 "책"을 설정
+*/
+obj.point =500;
+// handler에는 book의 값이 존재
+console.log(handler.book);
+// target에는 아무작업을 안했으므로 undefined
+console.log(target.book);
+/*
+*	[결과]
+*	123
+*	책
+*	undefined
 */
 ```
 
