@@ -977,9 +977,17 @@ try{
 
 # <a id="14"></a>[14](#a1). Proxy trap ( set 편 )
 
+[set 트랩](#14-1)
+
+[set 호출](#14-2)
+
+[set receiver](#14-3)
+
+[set this](#14-4)
+
 > ---
 
-> ## set() 트랩
+> ## set() <a id="14-1">트랩</a>
 >
 > | 구분     | 개요                                                         |
 > | -------- | ------------------------------------------------------------ |
@@ -1032,7 +1040,7 @@ console.log(obj.point);
 
 > ---
 
-> ## set 트랩 호출
+> ## set <a id="14-2">트랩 호출</a>
 >
 > - proxy[key]=100을 실행하면 set 트랩이 호출된다.
 >
@@ -1140,7 +1148,7 @@ console.log(target.point);
 
 > ---
 
-> ## set 트랩 - receiver
+> ## set 트랩 - <a id="14-3">receiver</a>
 >
 > - Proxy 인스턴스가 설정된다.
 >
@@ -1197,7 +1205,7 @@ console.log(target.title);
 
 > ---
 
->  ## set() - this
+>  ## set() - <a id="14-4">this</a>
 >
 > - set트랩에서 this는 handler 오브젝트를 참조한다.
 
