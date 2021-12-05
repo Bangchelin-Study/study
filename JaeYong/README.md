@@ -13,7 +13,8 @@
 | [11. Proxy 논리](#11)                                        |
 | [12. handler, trap](#12)                                     |
 | [13. Proxy 인스턴스 생성](#13)                               |
-| [14. Proxy trap](#14)                                        |
+| [14. Proxy set trap](#14)                                    |
+| [15. Proxy get trap](#15)                                    |
 
 <br/>
 
@@ -1235,6 +1236,120 @@ console.log(target.book);
 *	123
 *	책
 *	undefined
+*/
+```
+
+<br/><br/>
+
+# <a id="15"></a>[15](#a1). Proxy get()
+
+|   구분   | 개요                                                         |
+| :------: | ------------------------------------------------------------ |
+| 파라미터 | target, 대상 오브젝트<br/>key, property key<br/>receiver, 설명 참조 |
+|   반환   | property 값                                                  |
+
+> ---
+
+>## get() 트랩
+>
+>- target, receiver에서 값을 구한다.
+>- get 트랩이 호출되며 엔진이 실행 환경을 분석하여 파라미터 값을 설정한다.
+>- 조건문을 이용하여 원하는 값을 가져올 수 있다.
+>
+><br/>
+
+> ----
+
+```javascript
+const target = { point : 100 };
+const handler = {
+    get(target, key, receiver){
+        return target[key] + 200;
+    }
+};
+const obj = new Proxy(target, handler);
+/*
+obj.point를 통해 get 트랩을 호출한다.
+obj.point는 target의 point에 200을 더해서 반환한다.
+*/
+console.log(obj.point);
+/*
+obj.bonus는 값이 없다. undefined이다.
+undefined + 200 => NaN이 나온다.
+*/
+console.log(obj.bonus);
+/*
+*	[결과]
+*	300
+*	NaN
+*/
+<---------------------------------->
+    
+//조건문을 넣어 원하는 값을 가져올 수 있다.
+const target = { point : 100 };
+const handler = {
+    get(target, key, receiver){
+        return this.check ? target[key] + 200 : target[key];
+    }
+};
+const obj = new Proxy(target, handler);
+/*
+check를 true로 두면 target[key] + 200 을 반환하게 된다.
+*/
+handler.check = true;
+console.log(obj.point);
+
+/*이러한 조건문의 경우 target이 변경되면 문제가 생긴다.
+
+const target ==> let target 인 경우
+
+위의 코드에서 
+obj선언 뒤에 target = { point : 300 }
+을 하게 되면 obj에는 obj.target.point가 300을 갖고있고, target에는 500을 갖고있다.
+호출할때마다 값을 가져오는게 아니고 인스턴스를 생성하는 순간에 주소값을 저장하는 것이다.
+*/
+```
+
+> ---
+
+>## get() 트랩호출
+>
+>- 호출되는 형태
+>
+>  > - proxy[key]
+>  > - Object.create(proxy, {property})
+>  > - Reflect.get()
+>
+><br/>
+
+> ---
+
+```javascript
+const target = {point: 600, bonus:100};
+const handler = {
+    get(target, key, value, receiver){
+        return target[key]+200;
+    }
+};
+const proxy = new Proxy(target, handler);
+const obj = Object.create(proxy, {
+    //writable : false이면 반환시 값을 더해서 반환하면 에러가 발생한다.
+    point:{value:500}
+});
+/*
+obj에는 직접적으로 point가 존재하므로 500의 값을 참조한다.
+*/
+console.log(obj.point);
+/*
+obj에는 bonus가 없기때문에 get 트랩을 사용하게 된다.
+get 트랩에서는 target에 이쓴 bouns를 호출하여 200을 더한 값을 반환하므로 300이 반환된다.
+*/
+console.log(obj.bonus);
+
+/*
+*	[결과값]
+*	500	
+*	300
 */
 ```
 
