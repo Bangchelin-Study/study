@@ -64,3 +64,51 @@ obj.point = 500;
 log(handler.book); // "Book"이 출력된다.
 log(target.book); // undefined가 출력된다.
 ```
+
+
+# 3. get()
+파라미터 : target, key, receiver  
+반환값 : 프로퍼티 값
+
+target의 프로퍼티가 Data discripter이면 [[Writable]]: false 혹은 [[Configurable]]: false일때 반환 값을 변경하여 return 불가
+
+
+# 4. has(), deleteProperty()
+has()  
+파라미터 : target, key
+반환값 : boolean (값이 있으면 true, 아니면 false)  
+in 연산자의 트랩이다.
+ex)
+```js
+const target = {point: 100};
+const handler = {
+    has(target, key) {
+        return target[key];
+    }
+};
+const obj = new Proxy(target, handler);
+log("point" in obj); // true 출력
+log("book" in obj); // false 출력
+```
+
+deleteProperty()  
+파라미터 : target, key
+반환값 : boolean형 (성공: true, 실패: false)  
+delete 연산자의 트랩이다.  
+오브젝트의 프로퍼티를 삭제하는 작업을 한다.  
+ex)
+```js
+const target = {point: 100};
+const handler = {
+    deleteProperty(target, key) {
+        if (key in target) {
+            delete target[key];
+            return true;
+        }
+        return false;
+    }
+};
+const obj = new Proxy(target, handler);
+log(delete obj.point); // true 출력
+log(target.point); // undefined 출력
+```
