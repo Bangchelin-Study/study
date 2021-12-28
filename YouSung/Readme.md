@@ -1,7 +1,7 @@
 | <a id="a1"></a>목차                                          |
 | ------------------------------------------------------------ |
 | [1. 객체지향 프로그래밍](#1)<br/>                                  |
-| [2. Javascipt 클래스 선언](#2)<br/>                                    |
+| [2. Javascipt 클래스](#2)<br/>                                    |
 #| [3. 클래스의 작성기준](#3)<br/>                              |
 #| [4. Constructor](#4)<br/>                                    |
 #| [5. getter / setter, static메소드, 호이스팅](#5)<br/>        |
@@ -34,5 +34,10 @@ Javascipt는 객체지향 프로그래밍
 >			- 속성
 >			- 행위의 대상
 > ---
-# <a id="2"></a>[2](#a1). 객체지향 프로그래밍
-
+# <a id="2"></a>[2](#a1). Javascript의 class
+> ---
+### Prototype and Class
+> - Javascript는 class 기반 언어가 아닌 prototype 기반
+> - ES6로 넘어오며 class가 추가되었지만 이는 기존 prototype을 응용하여 만든 형태
+>
+> ## Prototype?
