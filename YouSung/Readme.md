@@ -20,7 +20,7 @@
 
 # <a id="1"></a>[1](#a1). 객체지향 프로그래밍
 > ---
-Javascipt는 객체지향 프로그래밍
+### Javascipt는 객체지향 프로그래밍
 > - 이 때 Javascript의 object는 OOP의 object가 아님
 >	- Javascript의 object는 property의 집합
 >		- 형체와 실체가 있음
@@ -40,4 +40,16 @@ Javascipt는 객체지향 프로그래밍
 > - Javascript는 class 기반 언어가 아닌 prototype 기반
 > - ES6로 넘어오며 class가 추가되었지만 이는 기존 prototype을 응용하여 만든 형태
 >
-> ## Prototype?
+## Prototype?
+- #### https://velog.io/@turtle601/Prototype이란
+- #### https://ui.toast.com/weekly-pick/ko_20160603
+> - Proto type 언어는 원형 객체를 복사하여 새로운 객체를 생성
+> - 하지만 javascript는 원형 객체 복제가 아닌 프로토탕입 링크를 통해 원형을 참조한다
+>   - javascript에서 원시타입을 제외한 모든 타입은 객체
+>   - 객체를 생성할 때 해당 객체의 원형을 지속적으로 체이닝 된 형태로 만들어짐
+>   ![f14b233e-2c8e-11e6-988d-6ea081b4c984](https://user-images.githubusercontent.com/26926966/147544038-61ef36a1-a9ea-4318-807b-dae6ca023a98.png)
+
+>   
+>		- javascipt에서 원시타입을 제외한 모드 타입은 객체
+>		- 객체를 생성할 때 해당 객체의 원형으 지속적을 체이닝 한 형태로 만들어짐
+> ---
