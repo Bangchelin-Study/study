@@ -40,16 +40,25 @@
 > - Javascript는 class 기반 언어가 아닌 prototype 기반
 > - ES6로 넘어오며 class가 추가되었지만 이는 기존 prototype을 응용하여 만든 형태
 >
-## Prototype?
-- #### https://velog.io/@turtle601/Prototype이란
-- #### https://ui.toast.com/weekly-pick/ko_20160603
+#### Prototype?
+- ##### https://velog.io/@turtle601/Prototype이란
+- ##### https://ui.toast.com/weekly-pick/ko_20160603
 > - Proto type 언어는 원형 객체를 복사하여 새로운 객체를 생성
 > - 하지만 javascript는 원형 객체 복제가 아닌 프로토탕입 링크를 통해 원형을 참조한다
->   - javascript에서 원시타입을 제외한 모든 타입은 객체
->   - 객체를 생성할 때 해당 객체의 원형을 지속적으로 체이닝 된 형태로 만들어짐
 >   ![f14b233e-2c8e-11e6-988d-6ea081b4c984](https://user-images.githubusercontent.com/26926966/147544038-61ef36a1-a9ea-4318-807b-dae6ca023a98.png)
 
 >   
 >		- javascipt에서 원시타입을 제외한 모드 타입은 객체
 >		- 객체를 생성할 때 해당 객체의 원형으 지속적을 체이닝 한 형태로 만들어짐
+#### Prototype Chainning and Class
+> ##### https://velog.io/@sik2/JS-CoreJavaScript-프로토타입-체이닝Prototype-Link-Prototype-Object
+
+> ![image](https://user-images.githubusercontent.com/26926966/147547700-705a6271-7b06-4d3b-bcb0-cb8ec6e04cd1.png)
+>   
+>		- class를 instance화 하면 다음고 같이 __proto__가 생성
+
+> ![image](https://user-images.githubusercontent.com/26926966/147547830-3d6a70ed-1d0c-4934-ba71-01c6fe3b846b.png)
+>   
+>		- javascript에서 객체 속성은 객체 -> __proto__ -> __proto__의 __proto__ ... 순으로 전파됨
+>		- 만약 끝까지 찾았어도 없다면 undefind가 return
 > ---
