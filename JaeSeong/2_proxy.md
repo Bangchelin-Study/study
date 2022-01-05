@@ -67,7 +67,7 @@ const handler = {
         return target[key];
     }
 };
-const obj = new Proxy(target, handler);
+const obj = Proxy.revocable(target, handler);
 const pt = obj.proxy.point; // Available!
 
 obj.revoke();
